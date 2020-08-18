@@ -1,15 +1,13 @@
-# R. Solano <ramon.solano@gmail.com>
-
 FROM ubuntu:20.04
 
 # default screen size
 ENV XRES=1280x800x24
 
-# tzdata settings
+# default tzdata
 ENV TZ_AREA=Etc
 ENV TZ_CITY=UTC
 
-# update and install software --no-install-recommends
+# update and install software
 RUN export DEBIAN_FRONTEND=noninteractive  \
 	&& apt-get update -q \
 	&& apt-get upgrade -qy \
@@ -17,27 +15,27 @@ RUN export DEBIAN_FRONTEND=noninteractive  \
 	apt-utils sudo supervisor vim openssh-server \
 	xserver-xorg xvfb x11vnc dbus-x11 \
 	xfce4 xfce4-terminal xfce4-xkb-plugin xfce4-screensaver  \
-# 	\
-# 	# fix LC_ALL: cannot change locale (en_US.UTF-8)
+	\
+	# fix "LC_ALL: cannot change locale (en_US.UTF-8)""
 	locales \
 	&& echo "LC_ALL=en_US.UTF-8" >> /etc/environment \
 	&& echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
 	&& echo "LANG=en_US.UTF-8" > /etc/locale.conf \
 	&& locale-gen en_US.UTF-8 \
-# 	\
-# 	# keep it slim
-# 	&& apt-get remove -qy \
-# 	\
-# 	# cleanup and fix
+	\
+	# keep it slim
+	# 	&& apt-get remove -qy \
+	\
+	# cleanup and fix
 	&& apt-get autoremove -y \
 	&& apt-get --fix-broken install \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-# # required preexisting dirs
+# required preexisting dirs
 RUN mkdir /run/sshd
 
-# # users and groups
+# users and groups
 RUN echo "root:ubuntu" | /usr/sbin/chpasswd \
     && useradd -m ubuntu -s /bin/bash \
     && echo "ubuntu:ubuntu" | /usr/sbin/chpasswd \
@@ -46,7 +44,7 @@ RUN echo "root:ubuntu" | /usr/sbin/chpasswd \
 # add my sys config files
 ADD etc /etc
 
-# personal config files
+# user config files
 
 # terminal
 ADD config/xfce4/terminal/terminalrc /home/ubuntu/.config/xfce4/terminal/terminalrc
