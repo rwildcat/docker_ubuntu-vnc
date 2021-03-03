@@ -4,8 +4,7 @@ FROM ubuntu:20.04
 ENV XRES=1280x800x24
 
 # default tzdata
-ENV TZ_AREA=Etc
-ENV TZ_CITY=UTC
+ENV TZ=Etc/UTC
 
 # update and install software
 RUN export DEBIAN_FRONTEND=noninteractive  \
@@ -14,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive  \
 	&& apt-get install -qy  --no-install-recommends \
 	apt-utils sudo supervisor vim openssh-server \
 	xserver-xorg xvfb x11vnc dbus-x11 \
-	xfce4 xfce4-terminal xfce4-xkb-plugin xfce4-screensaver  \
+	xfce4 xfce4-terminal xfce4-xkb-plugin  \
 	\
 	# fix "LC_ALL: cannot change locale (en_US.UTF-8)""
 	locales \
@@ -55,7 +54,7 @@ ADD config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml /home/ubuntu/.config/x
 
 # TZ, aliases
 RUN cd /home/ubuntu \
-	&& echo 'export TZ=/usr/share/zoneinfo/$TZ_AREA/$TZ_CITY' >> .bashrc \
+	&& echo 'export TZ=/usr/share/zoneinfo/$TZ' >> .bashrc \
 	&& sed -i 's/#alias/alias/' .bashrc  \
 	&& echo "alias lla='ls -al'" 		>> .bashrc \
 	&& echo "alias llt='ls -ltr'"  		>> .bashrc \

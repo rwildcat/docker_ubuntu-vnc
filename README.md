@@ -1,11 +1,11 @@
 # Docker Ubuntu VNC
 
-A lightweight (488 MB) Linux workstation based on [Ubuntu](https://ubuntu.com/). Provides a **graphical desktop**, and **VNC** and **SSH** access.
+A lightweight (519 MB) Linux workstation based on [Ubuntu](https://ubuntu.com/). Provides a **graphical desktop**, and **VNC** / **SSH** access.
 
 *Ramon Solano (ramon.solano at gmail.com)*
 
-**Last update**: Aug/18/2020.  
-**Base image**: [Ubuntu 20.04 (focal-20200720)](https://hub.docker.com/_/ubuntu)
+**Last update**: Mar/3/2021.  
+**Base image**: [Ubuntu 20.04 (focal-20210119)](https://hub.docker.com/_/ubuntu)
 
 
 ## Main packages
@@ -87,7 +87,7 @@ To run the container, you can just issue the `$ docker run <image-name>` command
 **Full syntax:**
 
 ```sh
-$ docker run [-it] [--rm] [--detach] [-h HOSTNAME] -p LVNCPORT:5900 -p LSSHPORT:22 [-e XRES=1280x800x24] [-e TZ_AREA={TZArea}] [-e TZ_CITY={TZCity}]  [-v LDIR:DIR] rsolano/ubuntu-vnc
+$ docker run [-it] [--rm] [--detach] [-h HOSTNAME] -p LVNCPORT:5900 -p LSSHPORT:22 [-e XRES=1280x800x24] [-e TZ={TZArea/TZCity}] [-v LDIR:DIR] rsolano/ubuntu-vnc
 ```
 
 where:
@@ -98,9 +98,7 @@ where:
 
 * `XRES`: Screen resolution and color depth. Default: `1200x800x24`
 
-* `TZ_AREA`: Local Timezone area, e.g. `Etc`, `America`, etc.
-
-* `TZ_CITY`: Local timezone city, e.g. `UTC`, `Mexico_City`, etc.
+* `TZ`: Local Timezone Area/City, e.g. `Etc/UTC`, `America/Mexico_City`, etc.
 
 * `LDIR:DIR`: Local directory to mount on container. `LDIR` is the local directory to export; `DIR` is the target dir on the container.  Both sholud be specified as absolute paths. For example: `-v $HOME/worskpace:/home/ubuntu/workspace`.
 
